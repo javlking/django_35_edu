@@ -45,3 +45,25 @@ class Sale(models.Model):
     sale_start_date = models.DateField()
     sale_end_date = models.DateField()
 
+
+# Таблица Программ курсов
+class Programs(models.Model):
+    course_name = models.ForeignKey(Course, on_delete=models.CASCADE)
+    tema_uroka = models.CharField(max_length=150)
+    opisaniye_temi = models.TextField()
+
+    def __str__(self):
+        return self.tema_uroka
+
+
+# Таблица уровней курсов
+class CourseLevel(models.Model):
+    course = models.ManyToManyField(Course)
+
+    chices = (('junior', 'Начинающий'), ('middle', 'Продолжающий'), ('pro', 'Продвинутый'))
+
+    choice = models.CharField(max_length=15, choices=chices)
+
+    def __str__(self):
+        return self.choice
+

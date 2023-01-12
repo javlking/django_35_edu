@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from . import models
@@ -24,5 +24,42 @@ def get_category(request, pk):
     return render(request, 'category.html', {'courses': courses_from_category, 'category': current_category})
 
 
+# Функция для вывода определенного продукта
+def get_course(request, pk):
+    current_product = models.Course.objects.get(course_name=pk)
+
+    return render(request, 'product.html', {'course': current_product})
 
 
+# Функция для добавления курса в корзину
+def add_to_cart(request, pk):
+    if request.method == 'POST':
+        # Получаем курс
+        current_course = models.Course.objects.get(course_name=pk)
+
+        # Добавляем в корзину
+        models.Cart(user_id=request.user.id, user_product=current_course).save()
+
+        # Перенаправляем обратно на страницу с курсом
+        return redirect(f'/course/{pk}')
+
+
+# Функция для получения корзины
+def get_user_cart(request):
+    current_user_cart = models.Cart.objects.filter(user_id=request.user.id)
+
+    return render(request, 'cart.html', {'user_cart': current_user_cart})
+
+
+# Функция подтверждения заказа
+def order_confirmation(request):
+    user_cart = models.Cart.objects.filter(user_id=request.user.id)
+
+    for i in user_cart:
+        models.Cabinet(user_id=request.user.id, user_courses=i.user_product).save()
+
+    # Очистка корзины
+    user_cart.delete()
+
+    # Перенаправляем
+    return redirect('/')
