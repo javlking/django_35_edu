@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+Категории: {% for i in category %} <a href="/category/{{ i }}"> {{ i }} </a> {% endfor %}<br><hr>
+
+Курсы: {% for i in courses %} <a href="/course/{{ i }}">{{ i }}</a> {% endfor %}<br><hr>
+
+Акции: {% for i in sales %} {{ i }} {% endfor %}<br><hr>
+
+</body>
+</html>
