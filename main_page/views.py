@@ -63,3 +63,22 @@ def order_confirmation(request):
 
     # Перенаправляем
     return redirect('/')
+
+
+# Функция для работы с кабинетом пользователя
+def get_user_cabinet(request):
+    user_cabinet = models.Cabinet.objects.filter(user_id=request.user.id)
+
+    return render(request, 'cabinet.html', {'user_cabinet': user_cabinet})
+
+
+# Функция для работы с оплаченными курсами
+def get_paid_course(request, pk):
+    current_course_program = models.Course.objects.get(course_name=pk)
+    paid_course_program = models.Programs.objects.filter(course_name=current_course_program)
+    checker = models.Cabinet.objects.filter(user_courses=current_course_program).exists()
+
+    if checker:
+        return render(request, 'learning_zone.html', {'course_program': paid_course_program})
+
+    return redirect('/')

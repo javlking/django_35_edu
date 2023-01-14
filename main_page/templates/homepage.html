@@ -11,6 +11,7 @@
 {% else %}
     <a href="/accounts/logout">LOG OUT</a>
     <a href="/user_cart">Корзина</a>
+    <a href="/user_cabinet">Кабинет</a>
 {% endif %}
 <hr>
 
@@ -18,7 +19,7 @@
 
 Курсы: {% for i in courses %} <a href="/course/{{ i }}">{{ i }}</a> {% endfor %}<br><hr>
 
-Акции: {% for i in sales %} {{ i }} {% endfor %}<br><hr>
+Акции: {% for i in sales %} {{ i.sale_name }} {% endfor %}<br><hr>
 
 </body>
 </html>

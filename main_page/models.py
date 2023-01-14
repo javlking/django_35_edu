@@ -41,9 +41,13 @@ class Cabinet(models.Model):
 
 # Таблица акций
 class Sale(models.Model):
+    sale_name = models.CharField(max_length=75, null=True, blank=True)
     courses = models.ManyToManyField(Course)
     sale_start_date = models.DateField()
     sale_end_date = models.DateField()
+
+    def __str__(self):
+        return self.sale_name
 
 
 # Таблица Программ курсов
