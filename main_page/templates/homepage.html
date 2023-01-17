@@ -6,7 +6,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body>  
+<body>
     <div class="container">
         <div class="container-block">
             <div class="header">
@@ -20,7 +20,6 @@
                     {% endif %}
                 </ul>
             </div>
-
             <div class="sales">
                 Акции: {% for i in sales %} {{ i.sale_name }} {% endfor %}
             </div>
